@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var screen: UILabel!
     
     var flagNum = true
+    var flagOpr = true
     var result:Double = 0
     
     override func viewDidLoad() {
@@ -31,13 +32,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func numbers(_ sender: UIButton) {
-        if flagNum == true {
-            screen.text = screen.text! + String(sender.tag - 1)
-            flagNum = true
-        }
-        else {
-            
-        }
+        screen.text = screen.text! + String(sender.tag - 1)
+        flagNum = true
     }
     
     @IBAction func oprators(_ sender: UIButton) {
@@ -56,9 +52,15 @@ class ViewController: UIViewController {
             oprScreen.text = screen.text! + " + "
             result = Double(screen.text!)!
             screen.text = ""
+            flagOpr = false
         case 16: // Equal
-            print("Equal")
-            oprScreen.text = " = "
+            if flagOpr == false {
+                oprScreen.text = oprScreen.text! + screen.text! + " = "
+                result += Double(screen.text!)!
+                screen.text = String(result)
+                flagOpr = true
+            }
+            
         default:
             print("default")
         }
