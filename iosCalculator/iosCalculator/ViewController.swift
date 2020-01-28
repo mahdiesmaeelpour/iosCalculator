@@ -16,10 +16,14 @@ class ViewController: UIViewController {
     var flagNum = true
     var flagOpr = true
     var result:Double = 0
+    var opr:String = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -37,33 +41,52 @@ class ViewController: UIViewController {
     }
     
     @IBAction func oprators(_ sender: UIButton) {
-        
         switch (sender.tag) {
-        case 12: // Divide
-            print("Divide")
-            oprScreen.text = " / "
-        case 13: // Multiple
-            print("Multiple")
-            oprScreen.text = " * "
-        case 14: // Minus
-            print("Minus")
-            oprScreen.text = " - "
-        case 15: // Plus
-            oprScreen.text = screen.text! + " + "
-            result = Double(screen.text!)!
-            screen.text = ""
-            flagOpr = false
-        case 16: // Equal
-            if flagOpr == false {
+            case 12: // Divide
+                oprSelector(o: "/")
+            case 13: // Multiple
+                oprSelector(o: "*")
+            case 14: // Minus
+                oprSelector(o: "-")
+            case 15: // Plus
+                oprSelector(o: "+")
+            case 16: // Equal
+                excuteOpr(o : opr)
+            default:
+                print("ERR: opratores function's switch")
+        }
+    }
+    
+    func oprSelector (o : String) {
+        oprScreen.text = screen.text! + " " + o + " "
+        result = Double(screen.text!)!
+        screen.text = ""
+        flagOpr = false
+        opr = o
+    }
+    func excuteOpr (o : String) {
+        if flagOpr == false {
+            if screen.text != "" {
+                switch (o) {
+                case "+":
+                    result += Double(screen.text!)!
+                case "-":
+                    result -= Double(screen.text!)!
+                case "*":
+                    result *= Double(screen.text!)!
+                case "/":
+                    result /= Double(screen.text!)!
+                default:
+                    print("ERR: opratores function's switch")
+                }
                 oprScreen.text = oprScreen.text! + screen.text! + " = "
-                result += Double(screen.text!)!
                 screen.text = String(result)
                 flagOpr = true
             }
-            
-        default:
-            print("default")
         }
+    }
+    
+    @IBAction func theme(_ sender: UIButton) {
         
     }
     
